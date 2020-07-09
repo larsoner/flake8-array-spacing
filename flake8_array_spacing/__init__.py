@@ -31,11 +31,11 @@ class ArraySpacing(object):
 
     def __iter__(self):
         for found, msg in extraneous_whitespace(self.logical_line):
-            if not self.in_array_like(found):
+            if msg[:4] in ('E201', 'E202') and not self.in_array_like(found):
                 yield found, 'A' + msg[1:]
         for found, msg in whitespace_around_operator(self.logical_line):
-            if not self.in_array_like(found):
+            if msg[:4] in ('E221', 'E222') and not self.in_array_like(found):
                 yield found, 'A' + msg[1:]
         for found, msg in whitespace_around_comma(self.logical_line):
-            if not self.in_array_like(found):
+            if msg[:4] == 'E241' and not self.in_array_like(found):
                 yield found, 'A' + msg[1:]
