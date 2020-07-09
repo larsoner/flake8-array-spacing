@@ -10,6 +10,8 @@ def flake8(path, *args):
         ['flake8', '--select', 'A2',
          '--ignore', 'E201,E202,E203,E221,E222,E241', '.'] + list(args),
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stderr = proc.stderr.decode().strip()
+    assert stderr == ''
     return proc.stdout.decode().strip(), proc.returncode
 
 
@@ -31,6 +33,8 @@ a_b_pre = 'a = 1\nb = 2\n'
     (a_b_pre + '[a  + b, b]', "./bad.py:3:3: A221 multiple spaces before operator", 1),  # noqa: E501
     (a_b_pre + '[a +  b, b]', "./bad.py:3:5: A222 multiple spaces after operator", 1),  # noqa: E501
     (a_b_pre + '[a,  b]', "./bad.py:3:4: A241 multiple spaces after ','", 1),
+    (a_b_pre + '[a,  b]  # noqa', '', 0),
+    (a_b_pre + '[a,  b]  # noqa: E241', '', 0),
 ])
 def test_array_spacing(line, want_output, want_code, tmpdir):
     """Test some cases."""
