@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "nightly"
+
+install:
+  - pip install flake8 check-manifest
+  - pip install .
+
+script:
+  - pytest
+  - flake8 .
+  - check-manifest
