@@ -70,6 +70,7 @@ class ArraySpacing(object):
         self.logical_line = logical_line
         self.tokens = tokens
         self._array_ranges = None  # only compute if necessary
+        self._ignore_codes = None
 
     def in_array_like(self, idx):
         """Determine if in array like range."""
@@ -81,12 +82,19 @@ class ArraySpacing(object):
 
     def ignoring(self, kind):
         """Determine if a kind is being ignored."""
-        for token in self.tokens:
-            if token.type == tokenize.COMMENT:
-                codes = NOQA_INLINE_REGEXP.match(token.string).group('codes')
-                if codes is not None and kind in codes:
-                    return True
-        return False
+        if self._ignore_codes is None:
+            for token in self.tokens:
+                if token.type == tokenize.COMMENT:
+                    codes = NOQA_INLINE_REGEXP.match(
+                        token.string).group('codes')
+                    if codes is not None:
+                        self._ignore_codes = tuple(
+                            c.strip() for c in codes.split(':')[-1].split(',')
+                            if c.strip())
+                        break
+            else:
+                self._ignore_codes = ()
+        return kind.startswith(self._ignore_codes)
 
     def __iter__(self):
         """Iterate over errors."""
