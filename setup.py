@@ -8,8 +8,8 @@ requires = [
 ]
 
 with open(op.join('README.rst'), 'r') as fid:
-    lines = fid.readlines()
-    description = lines[-1]
+    long_description = fid.read()
+description = 'flake8 plugin to make exceptions for array-like variables'
 print(os.listdir('.'))
 with open(op.join('flake8_array_spacing', '__init__.py'), 'r') as fid:
     for line in fid:
@@ -27,8 +27,10 @@ if __name__ == "__main__":
         name="flake8_array_spacing",
         license="BSD (3-clause)",
         version=version,
+        long_description=long_description,
+        long_description_content_type='text/x-rst',
         description=description,
-        author="Me",
+        author="Eric Larson",
         author_email="larson.eric.d@gmail.com",
         url="https://github.com/larsoner/flake8-array-spacing",
         python_requires=">=3.6",
