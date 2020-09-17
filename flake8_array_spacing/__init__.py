@@ -5,7 +5,7 @@ from pycodestyle import (extraneous_whitespace, whitespace_around_operator,
                          whitespace_around_comma)
 from flake8.defaults import NOQA_INLINE_REGEXP
 
-__version__ = '0.2.0'
+__version__ = '0.3.dev0'
 
 # This could almost certainly be better, it just checks for [...]
 # (no pairing within, or checking that i/j are attached to a number, etc.)
