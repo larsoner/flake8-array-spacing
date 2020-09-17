@@ -85,13 +85,16 @@ class ArraySpacing(object):
         if self._ignore_codes is None:
             for token in self.tokens:
                 if token.type == tokenize.COMMENT:
-                    codes = NOQA_INLINE_REGEXP.match(
-                        token.string).group('codes')
-                    if codes is not None:
-                        self._ignore_codes = tuple(
-                            c.strip() for c in codes.split(':')[-1].split(',')
-                            if c.strip())
-                        break
+                    match = NOQA_INLINE_REGEXP.match(token.string)
+                    if match is None:
+                        continue
+                    codes = match.group('codes')
+                    if codes is None:
+                        continue
+                    self._ignore_codes = tuple(
+                        c.strip() for c in codes.split(':')[-1].split(',')
+                        if c.strip())
+                    break
             else:
                 self._ignore_codes = ()
         return kind.startswith(self._ignore_codes)

@@ -56,6 +56,10 @@ def test_installed():
     ('[a,  b]  # noqa: E241', ''),
     ('[a,  b]  # noqa: E', ''),
     ('[a,  b]  # noqa: E2,E501', ''),
+    # found via matplotlib
+    ('quotes  = [0x2013] # endash', """\
+     ./bad.py:1:7: A221 multiple spaces before operator
+     ./bad.py:1:19: E261 at least two spaces before inline comment"""),
 ])
 def test_array_spacing(content, output, tmpdir):
     """Test some cases."""
