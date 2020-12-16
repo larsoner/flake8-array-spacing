@@ -11,8 +11,8 @@ __version__ = '0.3.dev0'
 # (no pairing within, or checking that i/j are attached to a number, etc.)
 _FMT = dict(
     VARIABLE=r'[_a-z]+[_a-z0-9]*',
-    OPERATORS=r'[+\-*\/^\|&]',
-    SEPARATORS=r'[+\-*\/^\|& ,\[\]()]',
+    OPERATORS=r'[-+*\/^\|&]',
+    SEPARATORS=r'[-+*\/^\|& ,\[\]()]',
     NUMERICAL=r"""
 (
 [0-9.]+(e[+-]?[0-9.]+)?j?|
